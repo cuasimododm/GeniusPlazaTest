@@ -37,15 +37,16 @@ public class UserAdapter extends ArrayAdapter<JSONObject> {
 
         JSONObject user = getItem(position);
 
+
         try {
             TextView firstName = (TextView) view.findViewById(R.id.textViewFirstName);
-            firstName.setText(user.getString("first_name"));
+            firstName.setText(user.getString(getContext().getResources().getString(R.string.key_json_first_name)));
 
             TextView lastName = (TextView) view.findViewById(R.id.textViewLastName);
-            lastName.setText(user.getString("last_name"));
+            lastName.setText(user.getString(getContext().getResources().getString(R.string.key_json_last_name)));
 
             ImageView avatarImage = (ImageView) view.findViewById(R.id.imageViewAvatar);
-            new AsyncImageDownloader(avatarImage).execute(user.getString("avatar"));
+            new AsyncImageDownloader(avatarImage).execute(user.getString(getContext().getResources().getString(R.string.key_json_avatar_url)));
 
 
         } catch (JSONException e) {

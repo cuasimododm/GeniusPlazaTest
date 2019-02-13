@@ -2,4 +2,13 @@
     <string name="app_name">GeniusPlazaTest</string>
     <string name="title_users">Users</string>
     <string name="title_new">New User</string>
+    <string name="text_view_first_name">First Name</string>
+    <string name="text_view_last_name">Last Name</string>
+    <string name="button_text_new_user">New User</string>
+    <string name="create_new_user_string">Create New User</string>
+    <string name="api_url_test">https://reqres.in/api/users</string>
+    <!--  JSON Keys  -->
+    <string name="key_json_first_name">first_name</string>
+    <string name="key_json_last_name">last_name</string>
+    <string name="key_json_avatar_url">avatar</string>
 </resources>

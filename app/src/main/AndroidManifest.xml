@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".NewUserActivity"
+            android:label="@string/create_new_user_string"
+            android:theme="@style/AppTheme">
+
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
