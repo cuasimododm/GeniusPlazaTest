@@ -6,6 +6,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.geniusplazatest.adapters.UserAdapter;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -16,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         String[] users = {"Pedro Picapiedra", "Bilma Picapiedra", "Pablo Marmol"};
 
-        ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
+        ListAdapter adapter = new UserAdapter(this, users);
         ListView listView = (ListView) findViewById(R.id.users_list_view);
         listView.setAdapter(adapter);
 
