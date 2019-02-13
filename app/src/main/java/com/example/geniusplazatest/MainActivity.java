@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         } catch (JSONException e) {
-            Log.e("GeniusPlaza: ", "MainActivitye " + e.getMessage());
+            Log.e("GeniusPlaza: ", "MainActivity " + e.getMessage());
             e.printStackTrace();
         }
     }

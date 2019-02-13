@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GeniusPlazaTest</string>
+    <string name="title_users">Users</string>
+    <string name="title_new">New User</string>
 </resources>
