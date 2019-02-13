@@ -10,10 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.geniusplazatest.R;
+import com.example.geniusplazatest.model.ModelUser;
 
-public class UserAdapter extends ArrayAdapter<String> {
+public class UserAdapter extends ArrayAdapter<ModelUser> {
 
-    public UserAdapter(@NonNull Context context, @NonNull String[] values) {
+    public UserAdapter(@NonNull Context context, @NonNull ModelUser[] values) {
         super(context, R.layout.row_user_layout, values);
     }
 
@@ -24,13 +25,13 @@ public class UserAdapter extends ArrayAdapter<String> {
 
         View view = inflater.inflate(R.layout.row_user_layout, parent, false);
 
-        String user = getItem(position);
+        ModelUser user = getItem(position);
 
         TextView firstName = (TextView) view.findViewById(R.id.textViewFirstName);
-        firstName.setText(user.substring(0, user.indexOf(" ")));
+        firstName.setText(user.getFirstName());
 
         TextView lastName = (TextView) view.findViewById(R.id.textViewLastName);
-        lastName.setText(user.substring(user.indexOf(" ") + 1));
+        lastName.setText(user.getLastName());
 
         return view;
     }
