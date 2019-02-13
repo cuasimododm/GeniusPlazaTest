@@ -31,6 +31,7 @@ public class NewUserActivity extends AppCompatActivity {
     private EditText firstName;
     private EditText lastName;
 
+    // Navigation bar listener
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -39,13 +40,13 @@ public class NewUserActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_users:
                     item.setEnabled(false);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+                    NewUserActivity.this.finish();
                     return true;
             }
             return false;
         }
     };
+    //..
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,10 @@ public class NewUserActivity extends AppCompatActivity {
         navigation.getMenu().getItem(1).setEnabled(false);
         //..
 
+        // Edit text fields setup
         firstName = (EditText)findViewById(R.id.edit_text_first_name);
         lastName = (EditText)findViewById(R.id.edit_text_last_name);
+        //..
     }
 
     public void onNewUserClicked(View view) {
@@ -68,9 +71,9 @@ public class NewUserActivity extends AppCompatActivity {
         if (firstName.getText().toString().length() == 0 && lastName.getText().toString().length() == 0)
             return;
 
-
-        JSONObject newUser = new JSONObject();
         try {
+            // Creates the JSONObject with the user's data
+            JSONObject newUser = new JSONObject();
             newUser.put(getResources().getString(R.string.key_json_first_name), firstName.getText());
             newUser.put(getResources().getString(R.string.key_json_last_name), lastName.getText());
 
@@ -86,18 +89,24 @@ public class NewUserActivity extends AppCompatActivity {
     {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = getResources().getString(R.string.api_url_test);
+
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, newUser,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("GeniusPlaza: ", "NewUserActivity " + response.toString());
+
+                        // Displays some feedback for the user
+                        Toast.makeText(NewUserActivity.this, R.string.new_user_created_text, Toast.LENGTH_SHORT).show();
+
+                        // Clean the name's fields after publish them
                         firstName.setText("");
                         lastName.setText("");
-                        Toast.makeText(NewUserActivity.this, "New User Created", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError e) {
+                // Displays some feedback for the user
                 Toast.makeText(NewUserActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 Log.d("GeniusPlaza: ", "NewUserActivity " + e.getLocalizedMessage());
                 e.printStackTrace();;

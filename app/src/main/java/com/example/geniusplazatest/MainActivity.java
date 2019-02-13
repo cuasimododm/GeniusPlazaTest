@@ -7,8 +7,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,6 +28,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ProgressBar spinner;
+
+    // Navigation bar listener
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
     };
+    //..
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +59,35 @@ public class MainActivity extends AppCompatActivity {
         navigation.getMenu().getItem(0).setEnabled(false);
         // ..
 
+        // Spinner setup
+        spinner = (ProgressBar)findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
+        //..
 
 
+        // Ask for users list
+        RequestUsersList();
+
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.getMenu().getItem(1).setEnabled(true);
+    }
+
+    private void RequestUsersList()
+    {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = getResources().getString(R.string.api_url_test);;
+
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         ParseResponse(response);
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -72,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         queue.add(jsonRequest);
+
+        // Starts the spinner animation
+        spinner.setVisibility(View.VISIBLE);
     }
 
     private void ParseResponse(JSONObject response)
@@ -100,8 +128,13 @@ public class MainActivity extends AppCompatActivity {
         JSONObject[] values = new JSONObject[users.size()];
         values = users.toArray(values);
 
+        // Populates the ListView
         ListAdapter adapter = new UserAdapter(MainActivity.this, values);
         ListView listView = (ListView) findViewById(R.id.users_list_view);
         listView.setAdapter(adapter);
+        //..
+
+        // Stops the spinner animation
+        spinner.setVisibility(View.GONE);
     }
 }
